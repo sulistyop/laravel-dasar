@@ -35,4 +35,34 @@ class ServiceContainerTest extends TestCase
         self::assertNotSame($person1, $person2);
     }
 
+    public function testSingleton()
+    {
+        // Closure
+        $this->app->singleton(Person::class, function ($app){
+            return new Person("Sulistyo","Pradana");
+        });
+
+        $person1 = $this->app->make(Person::class);// closure() // new Person("Sulistyo","Pradana"); if not exist
+        $person2 = $this->app->make(Person::class);// return existing , mengembalikan yg sudah ada
+
+        self::assertEquals('Sulistyo', $person1->firstName);
+        self::assertEquals('Sulistyo', $person2->firstName);
+
+        self::assertSame($person1, $person2);
+    }
+
+    public function testInstance()
+    {
+        $person = new Person("Sulistyo", "Pradana");
+        $this->app->instance(Person::class, $person);
+
+        $person1 = $this->app->make(Person::class);// $person
+        $person2 = $this->app->make(Person::class);//
+
+        self::assertEquals('Sulistyo', $person1->firstName);
+        self::assertEquals('Sulistyo', $person2->firstName);
+
+        self::assertSame($person1, $person2);
+    }
+
 }
