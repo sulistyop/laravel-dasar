@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Data\Bar;
 use App\Data\Foo;
 use App\Data\Person;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -10,7 +11,7 @@ use Tests\TestCase;
 
 class ServiceContainerTest extends TestCase
 {
-    public function testDependencyInjection()
+    public function testDependency()
     {
         $foo1 = $this->app->make(Foo::class); //new Foo()
         $foo2 = $this->app->make(Foo::class); //new Foo()
@@ -64,5 +65,18 @@ class ServiceContainerTest extends TestCase
 
         self::assertSame($person1, $person2);
     }
+
+    public function testDependencyInjection()
+    {
+        $this->app->singleton(Foo::class,function ($app){
+            return new Foo();
+        });
+
+        $foo = $this->app->make(Foo::class);
+        $bar = $this->app->make(Bar::class);
+
+        self::assertSame($foo, $bar->foo);
+    }
+
 
 }
