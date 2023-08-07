@@ -73,6 +73,40 @@ class InputControllerTest extends TestCase
         ->assertSeeText('true')
         ->assertSeeText('1999-04-30');
     }
+    public function testFilterOnly()
+    {
+        $this->post('/input/filter/only',[
+            "name"=>[
+                'first' => 'Sulistyo',
+                'middle' => 'Pradana',
+                'last' => 'Kosong'
+            ]
+        ])->assertSeeText('Sulistyo')
+        ->assertSeeText('Kosong')
+        ->assertDontSeeText('Pradana');
+    }
+
+    public function testFilterExcept()
+    {
+        $this->post('/input/filter/except',[
+            "username" => "sulistyop",
+            "admin" => "true",
+            "password" => "rahasia"
+        ])->assertSeeText('sulistyop')
+        ->assertSeeText('rahasia')
+        ->assertDontSeeText('admin');
+    }
+    public function testFilterMerge()
+    {
+        $this->post('/input/filter/merge',[
+            "username" => "sulistyop",
+            "admin" => "true",
+            "password" => "rahasia"
+        ])->assertSeeText('sulistyop')
+        ->assertSeeText('rahasia')
+        ->assertSeeText('admin')
+        ->assertSeeText('false');
+    }
 
 
 }
