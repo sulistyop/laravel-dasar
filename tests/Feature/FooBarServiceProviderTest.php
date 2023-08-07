@@ -4,13 +4,13 @@ namespace Tests\Feature;
 
 use App\Data\Bar;
 use App\Data\Foo;
+use App\Service\HelloService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 class FooBarServiceProviderTest extends TestCase
 {
-
     public function testServiceProvider()
     {
         $foo1 = $this->app->make(Foo::class);
@@ -25,4 +25,19 @@ class FooBarServiceProviderTest extends TestCase
         self::assertSame($foo1, $bar1->foo);
         self::assertSame($foo2, $bar2->foo);
     }
+    public function testPropertySingletons()
+    {
+        $helloService1 = $this->app->make(HelloService::class);
+        $helloService2 = $this->app->make(HelloService::class);
+
+        self::assertSame($helloService1, $helloService2);
+        self::assertEquals('Hallo Sulis', $helloService2->hello('Sulis'));
+    }
+
+    public function testProvideServiceProvider()
+    {
+        self::assertTrue(true);
+    }
+
+
 }
