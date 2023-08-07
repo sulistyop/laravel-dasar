@@ -28,7 +28,14 @@ class ServiceContainerTest extends TestCase
 
         self::assertEquals("Foo", $foo1->foo());
         self::assertEquals("Foo", $foo2->foo());
-        self::assertNotSame($foo1, $foo2);
+
+        // Dalam test ini seharusnya 2 object foo1 dan foo2 adalah object yang berbeda
+        // karena di FooBarServiceProvider class Foo sudah diregistrasi menjadi singletone
+        // akibatnya jika membuat class Foo baru tidak bisa dilakukan.
+        // akhirnya menggunakan class Foo yang sudah tersedia.
+        //self::assertNotSame($foo1, $foo2);
+
+        self::assertSame($foo1,$foo2);
     }
 
     /**

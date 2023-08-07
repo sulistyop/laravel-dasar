@@ -15,7 +15,7 @@ class EnvironmentTest extends TestCase
      */
     public function testGetEnv()
     {
-       $youtube = env('YOUTUBE');
+       $youtube = env('YOUTUBE','Sulistyo Pradana');
        self::assertEquals('Sulistyo Pradana', $youtube);
     }
 
