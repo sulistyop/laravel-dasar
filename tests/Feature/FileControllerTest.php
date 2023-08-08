@@ -13,6 +13,7 @@ class FileControllerTest extends TestCase
     public function testUpload()
     {
         $image = UploadedFile::fake()->image('sulistyo.png');
+        var_dump($image);
         $this->post('/file/upload',[
            'picture' => $image
         ])->assertSeeText('sulistyo.png');
