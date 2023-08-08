@@ -93,3 +93,7 @@ Route::post('/input/filter/except',[\App\Http\Controllers\InputController::class
 Route::post('/input/filter/merge',[\App\Http\Controllers\InputController::class, 'filterMerge']);
 Route::post('/file/upload/',[\App\Http\Controllers\FileController::class, 'imageUpload']);
 
+Route::get('/cookie/set', [\App\Http\Controllers\CookieController::class, 'createCookie']);
+Route::get('/cookie/get', [\App\Http\Controllers\CookieController::class, 'getCookie']);
+Route::get('/cookie/clear', [\App\Http\Controllers\CookieController::class, 'clearCookie']);
+
