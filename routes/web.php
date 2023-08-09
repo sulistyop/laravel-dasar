@@ -121,3 +121,5 @@ Route::get('/middleware/group',function (){
     return "GROUP";
 })->middleware(['PZN']);
 
+Route::get('/form', [\App\Http\Controllers\FormController::class, 'form']);
+Route::post('/form', [\App\Http\Controllers\FormController::class, 'submitForm']);
