@@ -24,7 +24,7 @@ class CookieController extends Controller
             ]);
     }
 
-    public function clearCookie(Request $request)
+    public function clearCookie(Request $request) : Response
     {
         return response("Clear Cookie")
             ->withoutCookie("User-Id")

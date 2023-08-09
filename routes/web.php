@@ -97,3 +97,18 @@ Route::get('/cookie/set', [\App\Http\Controllers\CookieController::class, 'creat
 Route::get('/cookie/get', [\App\Http\Controllers\CookieController::class, 'getCookie']);
 Route::get('/cookie/clear', [\App\Http\Controllers\CookieController::class, 'clearCookie']);
 
+Route::get('/redirect/from', [\App\Http\Controllers\RedirectController::class, 'redirectFrom']);
+Route::get('/redirect/to', [\App\Http\Controllers\RedirectController::class, 'redirectTo']);
+Route::get('/redirect/name', [\App\Http\Controllers\RedirectController::class, 'redirectName']);
+Route::get('/redirect/name/{name}', [\App\Http\Controllers\RedirectController::class, 'redirectHello'])
+    ->name('redirect-hello');
+Route::get('/redirect/action', [\App\Http\Controllers\RedirectController::class, 'redirectAction']);
+Route::get('/redirect/away', [\App\Http\Controllers\RedirectController::class, 'redirectAway']);
+
+Route::get('/response/hello', [\App\Http\Controllers\ResponseController::class, 'response']);
+Route::get('/response/header', [\App\Http\Controllers\ResponseController::class, 'header']);
+Route::get('/response/download', [\App\Http\Controllers\ResponseController::class, 'responseDownload']);
+Route::get('/response/view', [\App\Http\Controllers\ResponseController::class, 'responseView']);
+Route::get('/response/json', [\App\Http\Controllers\ResponseController::class, 'responseJson']);
+Route::get('/response/file', [\App\Http\Controllers\ResponseController::class, 'responseFile']);
+

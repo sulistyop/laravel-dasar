@@ -8,15 +8,29 @@ use Tests\TestCase;
 
 class RedirectControllerTest extends TestCase
 {
-    /**
-     * A basic feature test example.
-     *
-     * @return void
-     */
-    public function test_example()
+    public function testRedirect()
     {
-        $response = $this->get('/');
-
-        $response->assertStatus(200);
+        $this->get('/redirect/from')
+            ->assertRedirect('/redirect/to');
     }
+
+    public function testRedirectName()
+    {
+        $this->get('/redirect/name')
+            ->assertRedirect('/redirect/name/Sulis');
+    }
+
+    public function testRedirectAction()
+    {
+        $this->get('/redirect/action')
+            ->assertRedirect('/redirect/name/Sulis');
+    }
+
+    public function testRedirectAway()
+    {
+        $this->get('/redirect/away')
+            ->assertRedirect('https://programmerzamannow.com');
+    }
+
+
 }
