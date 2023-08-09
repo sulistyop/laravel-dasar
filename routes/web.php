@@ -94,9 +94,12 @@ Route::post('/input/filter/merge',[\App\Http\Controllers\InputController::class,
 Route::post('/file/upload/',[\App\Http\Controllers\FileController::class, 'imageUpload'])
     ->withoutMiddleware([\App\Http\Middleware\VerifyCsrfToken::class]);
 
-Route::get('/cookie/set', [\App\Http\Controllers\CookieController::class, 'createCookie']);
-Route::get('/cookie/get', [\App\Http\Controllers\CookieController::class, 'getCookie']);
-Route::get('/cookie/clear', [\App\Http\Controllers\CookieController::class, 'clearCookie']);
+Route::controller(\App\Http\Controllers\CookieController::class)->group(function (){
+    Route::get('/cookie/set','createCookie');
+    Route::get('/cookie/get','getCookie');
+    Route::get('/cookie/clear','clearCookie');
+});
+
 
 Route::get('/redirect/from', [\App\Http\Controllers\RedirectController::class, 'redirectFrom']);
 Route::get('/redirect/to', [\App\Http\Controllers\RedirectController::class, 'redirectTo']);
@@ -108,18 +111,21 @@ Route::get('/redirect/away', [\App\Http\Controllers\RedirectController::class, '
 
 Route::get('/response/hello', [\App\Http\Controllers\ResponseController::class, 'response']);
 Route::get('/response/header', [\App\Http\Controllers\ResponseController::class, 'header']);
-Route::get('/response/download', [\App\Http\Controllers\ResponseController::class, 'responseDownload']);
-Route::get('/response/view', [\App\Http\Controllers\ResponseController::class, 'responseView']);
-Route::get('/response/json', [\App\Http\Controllers\ResponseController::class, 'responseJson']);
-Route::get('/response/file', [\App\Http\Controllers\ResponseController::class, 'responseFile']);
+Route::prefix("/response")->group(function (){
+    Route::get('/download', [\App\Http\Controllers\ResponseController::class, 'responseDownload']);
+    Route::get('/view', [\App\Http\Controllers\ResponseController::class, 'responseView']);
+    Route::get('/json', [\App\Http\Controllers\ResponseController::class, 'responseJson']);
+    Route::get('/file', [\App\Http\Controllers\ResponseController::class, 'responseFile']);
+});
 
-Route::get('/middleware/api',function (){
-   return "OK";
-})->middleware(['contoh:PZN,401']);
-
-Route::get('/middleware/group',function (){
-    return "GROUP";
-})->middleware(['PZN']);
+Route::middleware(['contoh:PZN,401'])->prefix('/middleware')->group(function (){
+    Route::get('/api',function (){
+       return "OK";
+    });
+    Route::get('/group',function (){
+        return "GROUP";
+    });
+});
 
 Route::get('/form', [\App\Http\Controllers\FormController::class, 'form']);
 Route::post('/form', [\App\Http\Controllers\FormController::class, 'submitForm']);
