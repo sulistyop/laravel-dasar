@@ -91,7 +91,8 @@ Route::post('/input/hello/type',[\App\Http\Controllers\InputController::class, '
 Route::post('/input/filter/only',[\App\Http\Controllers\InputController::class, 'filterOnly']);
 Route::post('/input/filter/except',[\App\Http\Controllers\InputController::class, 'filterExcept']);
 Route::post('/input/filter/merge',[\App\Http\Controllers\InputController::class, 'filterMerge']);
-Route::post('/file/upload/',[\App\Http\Controllers\FileController::class, 'imageUpload']);
+Route::post('/file/upload/',[\App\Http\Controllers\FileController::class, 'imageUpload'])
+    ->withoutMiddleware([\App\Http\Middleware\VerifyCsrfToken::class]);
 
 Route::get('/cookie/set', [\App\Http\Controllers\CookieController::class, 'createCookie']);
 Route::get('/cookie/get', [\App\Http\Controllers\CookieController::class, 'getCookie']);
@@ -111,4 +112,12 @@ Route::get('/response/download', [\App\Http\Controllers\ResponseController::clas
 Route::get('/response/view', [\App\Http\Controllers\ResponseController::class, 'responseView']);
 Route::get('/response/json', [\App\Http\Controllers\ResponseController::class, 'responseJson']);
 Route::get('/response/file', [\App\Http\Controllers\ResponseController::class, 'responseFile']);
+
+Route::get('/middleware/api',function (){
+   return "OK";
+})->middleware(['contoh:PZN,401']);
+
+Route::get('/middleware/group',function (){
+    return "GROUP";
+})->middleware(['PZN']);
 
